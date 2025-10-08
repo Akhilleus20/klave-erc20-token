@@ -27,7 +27,7 @@ import {IERC20Metadata} from "./extensions/IERC20Metadata";
  * by listening to said events. Other implementations of the EIP may not emit
  * these events, as it isn't required by the specification.
  */
-@serializable
+@json
 export class ERC20 extends IERC20Events implements IERC20, IERC20Metadata {
     _accounts: Array<Account>;
     _decimals: u8;

@@ -1,6 +1,6 @@
 import { JSON } from "@klave/sdk"
 
-@serializable
+@json
 export class CreateInput {
     name!: string;
     symbol!: string;
@@ -8,56 +8,56 @@ export class CreateInput {
     totalSupply!: u64;
 }
 
-@serializable
+@json
 export class TransferInput {
     to!: string;
     value!: u64;
 }
 
-@serializable
+@json
 export class ApproveInput {
     spender!: string;
     value!: u64;
 }
 
-@serializable
+@json
 export class TransferFromInput {
     from!: string;
     to!: string;
     value!: u64;
 }
 
-@serializable
+@json
 export class AllowanceInput {
     owner!: string;
     spender!: string;
 }
 
-@serializable
+@json
 export class IncreaseAllowanceInput {
     spender!: string;
     addedValue!: u64;
 }
 
-@serializable
+@json
 export class DecreaseAllowanceInput {
     spender!: string;
     subtractedValue!: u64;
 }
 
-@serializable
+@json
 export class MintInput {
     to!: string;
     value!: u64;
 }
 
-@serializable
+@json
 export class BurnInput {
     from!: string;
     value!: u64;
 }
 
-@serializable
+@json
 export class BurnFromInput {
     spender!: string;
     value!: u64;

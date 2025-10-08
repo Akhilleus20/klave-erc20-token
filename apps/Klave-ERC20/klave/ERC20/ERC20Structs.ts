@@ -2,7 +2,7 @@ import {JSON} from "@klave/sdk"
 import {address} from "../../klave/types"
 
 
-@serializable
+@json
 export class Allowance {
     spender: address;
     value: u64;
@@ -13,8 +13,8 @@ export class Allowance {
     }
 }
 
-@serializable
-export class Account { 
+@json
+export class Account {
     owner: address;
     balance: u64;
     allowance: Array<Allowance>;
