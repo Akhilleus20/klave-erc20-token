@@ -71,7 +71,7 @@ export class ERC20 extends IERC20Events implements IERC20, IERC20Metadata {
      * be displayed to a user as `5.05` (`505 / 10 ** 2`).
      *
      * Tokens usually opt for a value of 18, imitating the relationship between
-     * Ether and Wei. However, in this implementation is had to be overiden to fit 
+     * Ether and Wei. However, in this implementation is had to be overiden to fit
      * within u64.
      *
      * NOTE: This information is only used for _display_ purposes: it in
@@ -132,7 +132,7 @@ export class ERC20 extends IERC20Events implements IERC20, IERC20Metadata {
         let owner = Context.get('sender');
         this.account(owner).subtractFromAllowance(spender, subtractedValue);
     }
-        
+
     /**
      * @dev See {IERC20-approve}.
      *
@@ -176,7 +176,7 @@ export class ERC20 extends IERC20Events implements IERC20, IERC20Metadata {
      * @dev Moves a `value` amount of tokens from `from` to `to`.
      *
      * This internal function is equivalent to {transfer}, and can be used to
-     * e.g. implement automatic token fees, slashing mechanisms, etc.          
+     * e.g. implement automatic token fees, slashing mechanisms, etc.
      *
      * NOTE: This function is not virtual, {_update} should be overridden instead.
      */
@@ -203,8 +203,10 @@ export class ERC20 extends IERC20Events implements IERC20, IERC20Metadata {
             let overflowCheck = this._totalSupply + value;
             if(overflowCheck < this._totalSupply)
             {
+                emit(`Overflow detected during minting. Setting totalSupply to u64.MAX_VALUE`);
                 this._totalSupply = u64.MAX_VALUE;
             }else {
+                emit(`Minting ${value} tokens to ${to}`);
                 this._totalSupply = overflowCheck;
             }
         } else {
@@ -223,7 +225,7 @@ export class ERC20 extends IERC20Events implements IERC20, IERC20Metadata {
             // Overflow not possible: balance + value is at most totalSupply, which we know fits into a u64.
             this.account(to).balance += value;
         }
-        
+
         emit(this.TransferEvent(from, to, value));
     }
 

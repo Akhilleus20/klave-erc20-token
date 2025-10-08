@@ -31,7 +31,7 @@ export function createToken(input: CreateInput): void {
     }
     let erc20 = new ERC20(input.name, input.symbol, input.decimals, input.totalSupply);
     Ledger.getTable(ERC20Table).set("ALL", JSON.stringify<ERC20>(erc20));
-    emit("Token created successfully");
+    emit("Token created successfully: " + JSON.stringify<ERC20>(erc20));
 }
 
 /**
@@ -64,7 +64,7 @@ export function decimals(): void {
     if (erc20.name().length == 0) {
         return;
     }
-    emit(`Symbol is ${erc20.decimals()}`);
+    emit(`Number of decimals is ${erc20.decimals()}`);
 }
 
 /**
