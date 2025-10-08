@@ -15,14 +15,18 @@ const _loadERC20 = function(): ERC20 {
 }
 
 const _saveERC20 = function(erc20 : ERC20): void {
-    Ledger.getTable(ERC20Table).set("ALL", JSON.stringify<ERC20>(erc20));
+    try {
+        Ledger.getTable(ERC20Table).set("ALL", JSON.stringify<ERC20>(erc20));
+    } catch (error) {
+        emit(`Error saving ERC20: ${error}`);
+    }
 }
 
 /**
  * @transaction
  * @param {CreateInput}
  **/
-export function createToken(input: CreateInput): void {    
+export function createToken(input: CreateInput): void {
     let erc20_table = Ledger.getTable(ERC20Table).get("ALL");
     if (erc20_table.length != 0) {
         emit("Token already exists");
@@ -33,7 +37,7 @@ export function createToken(input: CreateInput): void {
     emit("Token created successfully");
 }
 
-/** 
+/**
  * @query
  **/
 export function name(): void {
@@ -44,7 +48,7 @@ export function name(): void {
     emit(`Name is ${erc20.name()}`);
 }
 
-/** 
+/**
  * @query
  *  */
 export function symbol(): void {
@@ -55,7 +59,7 @@ export function symbol(): void {
     emit(`Symbol is ${erc20.symbol()}`);
 }
 
-/** 
+/**
  * @query
  *  */
 export function decimals(): void {
@@ -66,7 +70,7 @@ export function decimals(): void {
     emit(`Symbol is ${erc20.decimals()}`);
 }
 
-/** 
+/**
  * @query
  *  */
 export function totalSupply(): void {
@@ -77,7 +81,7 @@ export function totalSupply(): void {
     emit(`Total Supply is ${erc20.totalSupply()}`);
 }
 
-/** 
+/**
  * @query
  * @param {string}
  *  */
@@ -95,8 +99,8 @@ export function balanceOf(owner: string): void {
     emit(`Balance for ${owner} is ${erc20.balanceOf(owner)}`);
 }
 
-/** 
- * @transaction 
+/**
+ * @transaction
  * @param {TransferInput}
  *  */
 export function transfer(input: TransferInput): void {
@@ -111,7 +115,7 @@ export function transfer(input: TransferInput): void {
     _saveERC20(erc20);
 }
 
-/** 
+/**
  * @transaction
  * @param {ApproveInput}
  *  */
@@ -127,7 +131,7 @@ export function approve(input: ApproveInput): void {
     _saveERC20(erc20);
 }
 
-/** 
+/**
  * @transaction
  * @param {TransferFromInput}
  *  */
@@ -146,8 +150,8 @@ export function transferFrom(input: TransferFromInput): void {
     _saveERC20(erc20);
 }
 
-/** 
- * @query 
+/**
+ * @query
  * @param {AllowanceInput}
  **/
 export function allowance(input: AllowanceInput): void {
@@ -161,7 +165,7 @@ export function allowance(input: AllowanceInput): void {
     if (!erc20.accountHolder(input.owner) || !erc20.accountHolder(input.spender)) {
         return;
     }
-    emit(`Allowance for ${input.spender} on ${input.owner} account is ${erc20.allowance(input.owner, input.spender)}`);    
+    emit(`Allowance for ${input.spender} on ${input.owner} account is ${erc20.allowance(input.owner, input.spender)}`);
 }
 
 /**
@@ -210,7 +214,7 @@ export function mint(input: MintInput): void {
     }
     if (!erc20.accountHolder(input.to)) {
         erc20.createAccount(input.to);
-    }        
+    }
     erc20.mint(input.to, input.value);
     _saveERC20(erc20);
 }
