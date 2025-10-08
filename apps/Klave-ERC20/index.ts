@@ -213,6 +213,7 @@ export function mint(input: MintInput): void {
         erc20.createAccount(input.to);
     }
     erc20.mint(input.to, input.value);
+    emit('ERC20 state after mint: ' + JSON.stringify<ERC20>(erc20));
     _saveERC20(erc20);
 }
 
