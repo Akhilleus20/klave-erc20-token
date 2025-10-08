@@ -15,11 +15,8 @@ const _loadERC20 = function(): ERC20 {
 }
 
 const _saveERC20 = function(erc20 : ERC20): void {
-    try {
-        Ledger.getTable(ERC20Table).set("ALL", JSON.stringify<ERC20>(erc20));
-    } catch (error) {
-        emit(`Error saving ERC20: ${error}`);
-    }
+    emit(`Saving ERC20 state: ${JSON.stringify<ERC20>(erc20)}`);
+    Ledger.getTable(ERC20Table).set("ALL", JSON.stringify<ERC20>(erc20));
 }
 
 /**
