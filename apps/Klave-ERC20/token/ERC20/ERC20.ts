@@ -225,7 +225,7 @@ export class ERC20 extends IERC20Events implements IERC20, IERC20Metadata {
             // Overflow not possible: balance + value is at most totalSupply, which we know fits into a u64.
             this.account(to).balance += value;
         }
-
+        emit('ERC20 object state after _update: ' + JSON.stringify<ERC20>(this));
         emit(this.TransferEvent(from, to, value));
     }
 
