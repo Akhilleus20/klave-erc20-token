@@ -20,6 +20,8 @@ const _loadERC20 = function(): ERC20 {
     emit('ERC20 totalSupply: ' + parsed._totalSupply.toString());
     emit('ERC20 symbol: ' + parsed._symbol);
     emit('ERC20 accounts count: ' + parsed._accounts.length.toString());
+    emit('First account (if any): ' + (parsed._accounts.length > 0 ? parsed._accounts[0].owner : 'No accounts'));
+    emit('First account balance (if any): ' + (parsed._accounts.length > 0 ? parsed._accounts[0].balance.toString() : 'No accounts'));
 
     // Reconstruct properly through constructor
     let erc20 = new ERC20(parsed._name, parsed._symbol, parsed._decimals, parsed._totalSupply);
