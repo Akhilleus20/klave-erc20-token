@@ -57,6 +57,10 @@ export class ERC20 extends IERC20Events implements IERC20, IERC20Metadata {
         return this._name;
     }
 
+    initialize(): void {
+        super();
+    }
+
     /**
      * @dev Returns the symbol of the token, usually a shorter version of the
      * name.

@@ -204,6 +204,7 @@ export function decreaseAllowance(input: DecreaseAllowanceInput): void {
  */
 export function mint(input: MintInput): void {
     let erc20 = _loadERC20();
+    emit('Log before stringify');
     emit('ERC20 state before mint: ' + JSON.stringify<ERC20>(erc20));
     if (erc20.name().length == 0) {
         return;
