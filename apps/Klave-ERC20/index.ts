@@ -12,7 +12,13 @@ const _loadERC20 = function(): ERC20 {
         emit("Coin does not exists. Create it first");
         return new ERC20("", "", 0, 0);
     }
-    return JSON.parse<ERC20>(erc20_table);
+    // Parse the raw data
+    let parsed = JSON.parse<ERC20>(erc20_table);
+    // Reconstruct properly through constructor
+    let erc20 = new ERC20(parsed._name, parsed._symbol, parsed._decimals, parsed._totalSupply);
+    // Restore the accounts array
+    erc20._accounts = parsed._accounts;
+    return erc20;
 }
 
 const _saveERC20 = function(erc20 : ERC20): void {
