@@ -15,6 +15,12 @@ const _loadERC20 = function(): ERC20 {
     }
     // Parse the raw data
     let parsed = JSON.parse<ERC20>(erc20_table);
+    emit('ERC20 name: ' + parsed._name);
+    emit('ERC20 decimals: ' + parsed._decimals);
+    emit('ERC20 totalSupply: ' + parsed._totalSupply);
+    emit('ERC20 symbol: ' + parsed._symbol);
+    emit('ERC20 accounts count: ' + parsed._accounts.length);
+
     // Reconstruct properly through constructor
     let erc20 = new ERC20(parsed._name, parsed._symbol, parsed._decimals, parsed._totalSupply);
     // Restore the accounts array
