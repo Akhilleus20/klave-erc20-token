@@ -221,6 +221,16 @@ export function mint(input: MintInput): void {
 }
 
 /**
+ * @query
+ */
+export function testStringify(): void {
+    let erc20 = _loadERC20();
+    emit('Log before stringify in testStringify');
+    let erc20_str = JSON.stringify<ERC20>(erc20);
+    emit('ERC20 state in testStringify: ' + erc20_str);
+}
+
+/**
  * @transaction
  * @param {BurnInput}
  */
