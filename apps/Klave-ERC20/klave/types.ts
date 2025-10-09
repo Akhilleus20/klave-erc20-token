@@ -1,6 +1,5 @@
 import {Notifier, JSON} from "@klave/sdk"
 
-export type address = string
 export type error = string
 
 @json

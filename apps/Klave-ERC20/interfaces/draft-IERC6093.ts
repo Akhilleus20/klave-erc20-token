@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 // Inspired from OpenZeppelin Contracts (last updated v5.0.0) (interfaces/draft-IERC6093.sol)
-import {error, address} from "../klave/types"
+import {error} from "../klave/types"
 
 /**
  * @dev Standard ERC20 Errors
@@ -14,7 +14,7 @@ export class IERC20Errors {
      * @param balance Current balance for the interacting account.
      * @param needed Minimum amount required to perform a transfer.
      */
-    ERC20InsufficientBalance(sender: address, balance: u64, needed: u64): error {
+    ERC20InsufficientBalance(sender: string, balance: u64, needed: u64): error {
         let message = `Insufficient Balance (${balance} < ${needed})`;
         if (sender.length != 0) {
             message += ` for ${sender}`;
@@ -26,7 +26,7 @@ export class IERC20Errors {
      * @dev Indicates a failure with the token `sender`. Used in transfers.
      * @param sender Address whose tokens are being transferred.
      */
-    ERC20InvalidSender(sender: address) : error {
+    ERC20InvalidSender(sender: string) : error {
         let message = `Invalid Sender`;
         if (sender.length != 0) {
             message += ` from ${sender}`;
@@ -38,7 +38,7 @@ export class IERC20Errors {
      * @dev Indicates a failure with the token `receiver`. Used in transfers.
      * @param receiver Address to which tokens are being transferred.
      */
-    ERC20InvalidReceiver(receiver: address) : error {
+    ERC20InvalidReceiver(receiver: string) : error {
         let message = `Invalid Receiver`;
         if (receiver.length != 0) {
             message += ` from ${receiver}`;
@@ -52,7 +52,7 @@ export class IERC20Errors {
      * @param allowance Amount of tokens a `spender` is allowed to operate with.
      * @param needed Minimum amount required to perform a transfer.
      */
-    ERC20InsufficientAllowance(spender: address, allowance: u64, needed: u64) : error {
+    ERC20InsufficientAllowance(spender: string, allowance: u64, needed: u64) : error {
         let message = `Insufficient Allowance (${allowance} < ${needed})`;
         if (spender.length != 0) {
             message += ` for ${spender}`;
@@ -64,7 +64,7 @@ export class IERC20Errors {
      * @dev Indicates a failure with the `approver` of a token to be approved. Used in approvals.
      * @param approver Address initiating an approval operation.
      */
-    ERC20InvalidApprover(approver: address) : error {
+    ERC20InvalidApprover(approver: string) : error {
         return "";
     }
 
@@ -72,7 +72,7 @@ export class IERC20Errors {
      * @dev Indicates a failure with the `spender` to be approved. Used in approvals.
      * @param spender Address that may be allowed to operate on tokens without being their owner.
      */
-    ERC20InvalidSpender(spender: address) : error {
+    ERC20InvalidSpender(spender: string) : error {
         return "";
     }
 }
@@ -87,7 +87,7 @@ interface IERC721Errors {
      * Used in balance queries.
      * @param owner Address of the current owner of a token.
      */
-    ERC721InvalidOwner(owner: address) : error;
+    ERC721InvalidOwner(owner: string) : error;
 
     /**
      * @dev Indicates a `tokenId` whose `owner` is the zero address.
@@ -101,38 +101,38 @@ interface IERC721Errors {
      * @param tokenId Identifier number of a token.
      * @param owner Address of the current owner of a token.
      */
-    ERC721IncorrectOwner(sender: address, tokenId: u64, owner: address) : error;
+    ERC721IncorrectOwner(sender: string, tokenId: u64, owner: string) : error;
 
     /**
      * @dev Indicates a failure with the token `sender`. Used in transfers.
      * @param sender Address whose tokens are being transferred.
      */
-    ERC721InvalidSender(sender: address) : error;
+    ERC721InvalidSender(sender: string) : error;
 
     /**
      * @dev Indicates a failure with the token `receiver`. Used in transfers.
      * @param receiver Address to which tokens are being transferred.
      */
-    ERC721InvalidReceiver(receiver: address) : error;
+    ERC721InvalidReceiver(receiver: string) : error;
 
     /**
      * @dev Indicates a failure with the `operator`’s approval. Used in transfers.
      * @param operator Address that may be allowed to operate on tokens without being their owner.
      * @param tokenId Identifier number of a token.
      */
-    ERC721InsufficientApproval(operator: address, tokenId: u64) : error;
+    ERC721InsufficientApproval(operator: string, tokenId: u64) : error;
 
     /**
      * @dev Indicates a failure with the `approver` of a token to be approved. Used in approvals.
      * @param approver Address initiating an approval operation.
      */
-    ERC721InvalidApprover(approver: address) : error;
+    ERC721InvalidApprover(approver: string) : error;
 
     /**
      * @dev Indicates a failure with the `operator` to be approved. Used in approvals.
      * @param operator Address that may be allowed to operate on tokens without being their owner.
      */
-    ERC721InvalidOperator(operator: address) : error;
+    ERC721InvalidOperator(operator: string) : error;
 }
 
 /**
@@ -147,38 +147,38 @@ interface IERC1155Errors {
      * @param needed Minimum amount required to perform a transfer.
      * @param tokenId Identifier number of a token.
      */
-    ERC1155InsufficientBalance(sender: address, balance: u64, needed: u64, tokenId: u64) : error;
+    ERC1155InsufficientBalance(sender: string, balance: u64, needed: u64, tokenId: u64) : error;
 
     /**
      * @dev Indicates a failure with the token `sender`. Used in transfers.
      * @param sender Address whose tokens are being transferred.
      */
-    ERC1155InvalidSender(sender: address) : error;
+    ERC1155InvalidSender(sender: string) : error;
 
     /**
      * @dev Indicates a failure with the token `receiver`. Used in transfers.
      * @param receiver Address to which tokens are being transferred.
      */
-    ERC1155InvalidReceiver(receiver: address) : error;
+    ERC1155InvalidReceiver(receiver: string) : error;
 
     /**
      * @dev Indicates a failure with the `operator`’s approval. Used in transfers.
      * @param operator Address that may be allowed to operate on tokens without being their owner.
      * @param owner Address of the current owner of a token.
      */
-    ERC1155MissingApprovalForAll(operator: address, owner: address) : error;
+    ERC1155MissingApprovalForAll(operator: string, owner: string) : error;
 
     /**
      * @dev Indicates a failure with the `approver` of a token to be approved. Used in approvals.
      * @param approver Address initiating an approval operation.
      */
-    ERC1155InvalidApprover(approver: address) : error;
+    ERC1155InvalidApprover(approver: string) : error;
 
     /**
      * @dev Indicates a failure with the `operator` to be approved. Used in approvals.
      * @param operator Address that may be allowed to operate on tokens without being their owner.
      */
-    ERC1155InvalidOperator(operator: address) : error;
+    ERC1155InvalidOperator(operator: string) : error;
 
     /**
      * @dev Indicates an array length mismatch between ids and values in a safeBatchTransferFrom operation.
