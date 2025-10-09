@@ -2,6 +2,7 @@ import { JSON, Ledger, Context } from "@klave/sdk"
 import { ERC20 } from "./token/ERC20/ERC20"
 import { emit } from "./klave/types"
 import { CreateInput, TransferInput, ApproveInput, TransferFromInput, AllowanceInput, IncreaseAllowanceInput, DecreaseAllowanceInput, MintInput, BurnInput } from "./klave/ERC20/ERC20RouteArgs";
+import { Account, Allowance } from "./klave/ERC20/ERC20Structs";
 
 const ERC20Table = "ERC20Table";
 
@@ -17,7 +18,20 @@ const _loadERC20 = function(): ERC20 {
     // Reconstruct properly through constructor
     let erc20 = new ERC20(parsed._name, parsed._symbol, parsed._decimals, parsed._totalSupply);
     // Restore the accounts array
-    erc20._accounts = parsed._accounts;
+    // Properly reconstruct each account instead of direct assignment
+    for (let i = 0; i < parsed._accounts.length; i++) {
+        let parsedAccount = parsed._accounts[i];
+        // Create a new Account object properly
+        let account = new Account(parsedAccount.owner, parsedAccount.balance);
+
+        // Reconstruct allowances if they exist
+        for (let j = 0; j < parsedAccount.allowance.length; j++) {
+            let parsedAllowance = parsedAccount.allowance[j];
+            account.allowance.push(new Allowance(parsedAllowance.spender, parsedAllowance.value));
+        }
+
+        erc20._accounts.push(account);
+    }
     return erc20;
 }
 
